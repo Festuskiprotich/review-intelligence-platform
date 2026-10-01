@@ -11,12 +11,11 @@ An end-to-end NLP project that reads customer reviews and predicts star ratings,
 | Phase | Model | Accuracy | Macro F1 |
 |---|---|---|---|
 | 1 | TF-IDF + Logistic Regression | 0.5632 | **0.5604** |
+| 2 | TF-IDF + MLP (PyTorch) | 0.5378 | 0.5366 |
+| 3 | BiLSTM + embeddings | 0.5376 | 0.5313 |
 | 1 | TF-IDF + XGBoost | 0.5202 | 0.5160 |
 | 1 | TF-IDF + Random Forest | 0.5010 | 0.4879 |
-| 2 | TF-IDF + MLP (PyTorch) | 0.5378 | 0.5366 |
-| 3 | BiLSTM + embeddings | in progress | in progress |
 | 4 | Fine-tuned DistilBERT | planned | planned |
-
 ## Key findings
 
 - **Linear models are hard to beat on sparse text.** Logistic regression outperformed Random Forest, XGBoost and a neural network on TF-IDF features.
