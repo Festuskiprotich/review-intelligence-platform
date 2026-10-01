@@ -16,17 +16,19 @@ An end-to-end NLP project that reads customer reviews and predicts star ratings,
 | 1 | TF-IDF + XGBoost | 0.5202 | 0.5160 |
 | 1 | TF-IDF + Random Forest | 0.5010 | 0.4879 |
 | 4 | Fine-tuned DistilBERT | planned | planned |
+
 ## Key findings
 
 - **Linear models are hard to beat on sparse text.** Logistic regression outperformed Random Forest, XGBoost and a neural network on TF-IDF features.
 - **The bottleneck is the representation, not model capacity.** TF-IDF discards word order and context, so a bigger model on the same input did not help. The MLP (0.537) stayed below logistic regression (0.560).
-- **Next:** models that read words in order (LSTM) and pretrained transformers (DistilBERT) should capture the nuance between neighbouring ratings such as 2 and 3 stars.
+- **Learning embeddings from scratch is limited by data.** A BiLSTM reached 0.531 macro F1, peaking at epoch 3 before overfitting. With only 18k training reviews, this motivates transfer learning.
+- **Next:** pretrained transformers (DistilBERT) should capture the nuance between neighbouring ratings such as 2 and 3 stars.
 
 ## Roadmap
 
 - [x] Phase 1: classical ML baselines
 - [x] Phase 2: neural network (MLP) in PyTorch
-- [ ] Phase 3: LSTM with word embeddings
+- [x] Phase 3: LSTM with word embeddings
 - [ ] Phase 4: fine-tuned DistilBERT
 - [ ] Phase 5: emotion detection on reviews (reusing [my emotion classifier](https://huggingface.co/spaces/Ronohcr7/emotion-classifier))
 - [ ] Phase 6: topic modeling and summarization
@@ -41,3 +43,4 @@ Python, scikit-learn, XGBoost, PyTorch, Hugging Face Transformers and Datasets
 
 - `01_classical_ml.ipynb`: TF-IDF with Logistic Regression, Random Forest, XGBoost
 - `02_neural_network.ipynb`: MLP built and trained in PyTorch
+- `03_lstm.ipynb`: BiLSTM with learned embeddings
