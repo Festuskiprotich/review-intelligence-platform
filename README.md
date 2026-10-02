@@ -30,20 +30,26 @@ Almost all errors are between neighbouring ratings: 88% of mistakes (1,734 of 1,
 
 **Possible improvements:** train on more data (this run used 20k of 650k reviews), try a larger model such as RoBERTa, or treat the rating as an ordinal target.
 
+## Emotion analysis (Phase 5)
+
+I ran my fine-tuned [emotion classifier](https://huggingface.co/spaces/Ronohcr7/emotion-classifier) on 5,000 Yelp test reviews to see how predicted emotion relates to star rating. The share of reviews classified as joy rises from 26% at 1 star to 82% at 5 stars, while anger falls from 46% to 6% and sadness from 22% to 4%. Love, fear and surprise stay between 1% and 5% at every rating and carry little signal.
+
+**Caveats:** the emotion model was trained on short tweets, while these are long restaurant reviews, so this is an exploratory analysis. No ground-truth emotion labels exist for Yelp, so accuracy cannot be measured. About a quarter of 1-star reviews were still labelled joy, which I have not yet explained.
+
 ## Roadmap
 
 - [x] Phase 1: classical ML baselines
 - [x] Phase 2: neural network (MLP) in PyTorch
 - [x] Phase 3: LSTM with word embeddings
 - [x] Phase 4: fine-tuned DistilBERT
-- [ ] Phase 5: emotion detection on reviews (reusing [my emotion classifier](https://huggingface.co/spaces/Ronohcr7/emotion-classifier))
+- [x] Phase 5: emotion analysis of reviews
 - [ ] Phase 6: topic modeling and summarization
 - [ ] Phase 7: semantic search
 - [ ] Phase 8: dashboard deployed on Hugging Face Spaces
 
 ## Tech stack
 
-Python, scikit-learn, XGBoost, PyTorch, Hugging Face Transformers and Datasets
+Python, scikit-learn, XGBoost, PyTorch, Hugging Face Transformers and Datasets, matplotlib
 
 ## Notebooks
 
@@ -51,3 +57,4 @@ Python, scikit-learn, XGBoost, PyTorch, Hugging Face Transformers and Datasets
 - `02_neural_network.ipynb`: MLP built and trained in PyTorch
 - `03_lstm.ipynb`: BiLSTM with learned embeddings
 - `04_distilbert.ipynb`: fine-tuned DistilBERT and error analysis
+- `05_emotions.ipynb`: emotion analysis of reviews
