@@ -44,6 +44,12 @@ To see what the unhappy customers say, I summarized the five 1-2 star reviews cl
 
 **Caveats:** the number of clusters (8) was chosen without tuning, the cluster names are my interpretation of keywords and example reviews, and the clusters describe business type more than complaint type. Each summary covers only five reviews, so the findings are illustrations and not measurements, and the summarizer sometimes picks a positive sentence from a negative review.
 
+## Semantic search (Phase 7)
+
+I embedded 5,000 Yelp reviews with all-MiniLM-L6-v2 and ranked them by cosine similarity to a free-text query. The search matches meaning, not keywords, and it picked up sentiment without being told. The query "the waiter ignored us and the food arrived cold" returned five 1-2 star reviews, mostly about long waits, rude service and cold food, and "friendly and fast service" returned five 4-5 star reviews praising friendly staff and good service. A rating filter narrows results further: "rude staff and billing problems" restricted to 2 stars or fewer returned five 1-star reviews about rude staff and poor customer service.
+
+**Caveats:** I checked this by reading the top five results for four queries, not against labelled relevance judgements. Vague queries were weaker: "great place for a quiet date night" returned two relevant reviews followed by three 3-star reviews that matched only loosely, and the billing part of the third query was not clearly matched. Search covers only the 5,000-review sample.
+
 ## Roadmap
 
 - [x] Phase 1: classical ML baselines
@@ -52,7 +58,7 @@ To see what the unhappy customers say, I summarized the five 1-2 star reviews cl
 - [x] Phase 4: fine-tuned DistilBERT
 - [x] Phase 5: emotion analysis of reviews
 - [x] Phase 6: topic modeling and summarization
-- [ ] Phase 7: semantic search
+- [x] Phase 7: semantic search
 - [ ] Phase 8: dashboard deployed on Hugging Face Spaces
 
 ## Tech stack
@@ -67,3 +73,4 @@ Python, scikit-learn, XGBoost, PyTorch, Hugging Face Transformers and Datasets, 
 - `04_distilbert.ipynb`: fine-tuned DistilBERT and error analysis
 - `05_emotions.ipynb`: emotion analysis of reviews
 - `06_topics.ipynb`: topic clustering and summarization
+- `07_semantic_search.ipynb`: semantic search over reviews
