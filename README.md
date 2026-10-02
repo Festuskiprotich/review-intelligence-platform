@@ -34,7 +34,15 @@ Almost all errors are between neighbouring ratings: 88% of mistakes (1,734 of 1,
 
 I ran my fine-tuned [emotion classifier](https://huggingface.co/spaces/Ronohcr7/emotion-classifier) on 5,000 Yelp test reviews to see how predicted emotion relates to star rating. The share of reviews classified as joy rises from 26% at 1 star to 82% at 5 stars, while anger falls from 46% to 6% and sadness from 22% to 4%. Love, fear and surprise stay between 1% and 5% at every rating and carry little signal.
 
-**Caveats:** the emotion model was trained on short tweets, while these are long restaurant reviews, so this is an exploratory analysis. No ground-truth emotion labels exist for Yelp, so accuracy cannot be measured. About a quarter of 1-star reviews were still labelled joy, which I have not yet explained.
+**Caveats:** the emotion model was trained on short tweets, while these are long business reviews, so this is an exploratory analysis. No ground-truth emotion labels exist for Yelp, so accuracy cannot be measured. About a quarter of 1-star reviews were still labelled joy, which I have not yet explained.
+
+## Topic analysis and summarization (Phase 6)
+
+I embedded 5,000 Yelp reviews with a sentence-transformer (all-MiniLM-L6-v2) and grouped them into 8 clusters with KMeans. The clusters mostly separate business types: general dining, Asian restaurants, hotels and casinos, coffee and desserts, casual dining, and stores and personal care. Two clusters stand out for low ratings. One about restaurant service and waiting averages 2.06 stars (493 of its 702 reviews are rated 1-2 stars), and one about customer service disputes averages 1.78 stars (388 of 479). Every other cluster averages between 2.95 and 3.62.
+
+To see what the unhappy customers say, I summarized the five 1-2 star reviews closest to each problem cluster's centre with DistilBART. In the restaurant cluster they describe mediocre or cold food, dirty tables and long waits. In the other cluster they describe missed deliveries, unresponsive staff and an auto shop upselling tires.
+
+**Caveats:** the number of clusters (8) was chosen without tuning, the cluster names are my interpretation of keywords and example reviews, and the clusters describe business type more than complaint type. Each summary covers only five reviews, so the findings are illustrations and not measurements, and the summarizer sometimes picks a positive sentence from a negative review.
 
 ## Roadmap
 
@@ -43,13 +51,13 @@ I ran my fine-tuned [emotion classifier](https://huggingface.co/spaces/Ronohcr7/
 - [x] Phase 3: LSTM with word embeddings
 - [x] Phase 4: fine-tuned DistilBERT
 - [x] Phase 5: emotion analysis of reviews
-- [ ] Phase 6: topic modeling and summarization
+- [x] Phase 6: topic modeling and summarization
 - [ ] Phase 7: semantic search
 - [ ] Phase 8: dashboard deployed on Hugging Face Spaces
 
 ## Tech stack
 
-Python, scikit-learn, XGBoost, PyTorch, Hugging Face Transformers and Datasets, matplotlib
+Python, scikit-learn, XGBoost, PyTorch, Hugging Face Transformers and Datasets, sentence-transformers, matplotlib
 
 ## Notebooks
 
@@ -58,3 +66,4 @@ Python, scikit-learn, XGBoost, PyTorch, Hugging Face Transformers and Datasets, 
 - `03_lstm.ipynb`: BiLSTM with learned embeddings
 - `04_distilbert.ipynb`: fine-tuned DistilBERT and error analysis
 - `05_emotions.ipynb`: emotion analysis of reviews
+- `06_topics.ipynb`: topic clustering and summarization
