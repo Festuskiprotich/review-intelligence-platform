@@ -2,6 +2,8 @@
 
 An end-to-end NLP project that reads customer reviews and predicts star ratings, built phase by phase from classical machine learning to neural networks and transformers. Each phase is measured against the previous one so it is clear what deep learning adds.
 
+**Live demo:** https://huggingface.co/spaces/Ronohcr7/review-intelligence
+
 **Dataset:** [Yelp Review Full](https://huggingface.co/datasets/Yelp/yelp_review_full), a 20,000-review sample for training and 5,000 for testing. The five star ratings are evenly balanced.
 
 **Metric:** macro F1 (accuracy is also reported). Random guessing would score about 20%.
@@ -50,6 +52,14 @@ I embedded 5,000 Yelp reviews with all-MiniLM-L6-v2 and ranked them by cosine si
 
 **Caveats:** I checked this by reading the top five results for four queries, not against labelled relevance judgements. Vague queries were weaker: "great place for a quiet date night" returned two relevant reviews followed by three 3-star reviews that matched only loosely, and the billing part of the third query was not clearly matched. Search covers only the 5,000-review sample.
 
+## Live dashboard (Phase 8)
+
+**Try it:** https://huggingface.co/spaces/Ronohcr7/review-intelligence
+
+The dashboard has two tabs. *Analyze a review* predicts the star rating with a fine-tuned DistilBERT and the emotion with my emotion classifier. *Search reviews* finds the most similar reviews to a free-text query among 5,000 Yelp reviews, with an optional rating filter. The app code is in the `app/` folder.
+
+**Note:** the dashboard uses a retrained copy of the Phase 4 model with identical settings. It scored 0.612 accuracy and 0.6126 macro F1 on the same test set, within normal run-to-run variation of the 0.6084 reported above. The app runs on Hugging Face's free ZeroGPU hardware, so the first request after a period of inactivity can take several seconds.
+
 ## Roadmap
 
 - [x] Phase 1: classical ML baselines
@@ -59,11 +69,11 @@ I embedded 5,000 Yelp reviews with all-MiniLM-L6-v2 and ranked them by cosine si
 - [x] Phase 5: emotion analysis of reviews
 - [x] Phase 6: topic modeling and summarization
 - [x] Phase 7: semantic search
-- [ ] Phase 8: dashboard deployed on Hugging Face Spaces
+- [x] Phase 8: dashboard deployed on Hugging Face Spaces
 
 ## Tech stack
 
-Python, scikit-learn, XGBoost, PyTorch, Hugging Face Transformers and Datasets, sentence-transformers, matplotlib
+Python, scikit-learn, XGBoost, PyTorch, Hugging Face Transformers and Datasets, sentence-transformers, Gradio, Hugging Face Spaces, matplotlib
 
 ## Notebooks
 
@@ -74,3 +84,9 @@ Python, scikit-learn, XGBoost, PyTorch, Hugging Face Transformers and Datasets, 
 - `05_emotions.ipynb`: emotion analysis of reviews
 - `06_topics.ipynb`: topic clustering and summarization
 - `07_semantic_search.ipynb`: semantic search over reviews
+- `08_dashboard_prep.ipynb`: retrains the star-rating model and prepares the dashboard files
+
+## App
+
+- `app/app.py`: the Gradio dashboard
+- `app/requirements.txt`: its dependencies
