@@ -59,6 +59,7 @@ I embedded 5,000 Yelp reviews with all-MiniLM-L6-v2 and ranked them by cosine si
 The dashboard has two tabs. *Analyze a review* predicts the star rating with a fine-tuned DistilBERT and the emotion with my emotion classifier. *Search reviews* finds the most similar reviews to a free-text query among 5,000 Yelp reviews, with an optional rating filter. The app code is in the `app/` folder.
 
 **Note:** the dashboard uses a retrained copy of the Phase 4 model with identical settings. It scored 0.612 accuracy and 0.6126 macro F1 on the same test set, within normal run-to-run variation of the 0.6084 reported above. The app runs on Hugging Face's free ZeroGPU hardware, so the first request after a period of inactivity can take several seconds.
+The free ZeroGPU hardware is occasionally unavailable, in which case the Analyze tab shows an error and works again after a short wait.
 
 ## Roadmap
 
